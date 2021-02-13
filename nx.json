@@ -1,6 +1,6 @@
 {
-  "npmScope": "nxpm-new",
-  "affected": { "defaultBase": "master" },
+  "npmScope": "nxpm",
+  "affected": { "defaultBase": "main" },
   "implicitDependencies": {
     "workspace.json": "*",
     "package.json": { "dependencies": "*", "devDependencies": "*" },
@@ -17,7 +17,12 @@
   },
   "projects": {
     "stack": { "tags": [] },
-    "stack-e2e": { "tags": [], "implicitDependencies": ["stack"] }
+    "stack-e2e": { "tags": [], "implicitDependencies": ["stack"] },
+    "common": { "tags": [] },
+    "api": { "tags": [] },
+    "api-e2e": { "tags": [], "implicitDependencies": ["api"] },
+    "web": { "tags": [] },
+    "web-e2e": { "tags": [], "implicitDependencies": ["web"] }
   },
   "workspaceLayout": { "appsDir": "e2e", "libsDir": "packages" }
 }

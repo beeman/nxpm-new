@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "nxpm-new/stack": ["packages/stack/src/index.ts"]
+      "@nxpm/stack": ["packages/stack/src/index.ts"],
+      "@nxpm/common": ["packages/common/src/index.ts"],
+      "@nxpm/api": ["packages/api/src/index.ts"],
+      "@nxpm/web": ["packages/web/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

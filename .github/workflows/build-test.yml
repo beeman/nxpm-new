@@ -1,0 +1,38 @@
+name: build-test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+env:
+  BEFORE_SHA: ${{ github.event.before }}
+  NX_BRANCH: ${{ github.event.number }}
+  NX_RUN_GROUP: ${{ github.run_id }}
+
+jobs:
+  build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        node-version: [ 14.x ]
+        operating-system: [ ubuntu-20.04 ]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Setup node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install --frozen-lockfile
+      - run: yarn format:check
+      - run: yarn affected:lint --base=remotes/origin/main
+      - run: yarn affected:build --base=remotes/origin/main
+      - run: yarn affected:test --base=remotes/origin/main
+      - run: yarn affected:e2e --base=remotes/origin/main

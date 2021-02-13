@@ -8,9 +8,9 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
-import { StackGeneratorSchema } from './schema';
+import { ApiGeneratorSchema } from './schema';
 
-interface NormalizedSchema extends StackGeneratorSchema {
+interface NormalizedSchema extends ApiGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -19,7 +19,7 @@ interface NormalizedSchema extends StackGeneratorSchema {
 
 function normalizeOptions(
   host: Tree,
-  options: StackGeneratorSchema
+  options: ApiGeneratorSchema
 ): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
@@ -55,7 +55,7 @@ function addFiles(host: Tree, options: NormalizedSchema) {
   );
 }
 
-export default async function (host: Tree, options: StackGeneratorSchema) {
+export default async function (host: Tree, options: ApiGeneratorSchema) {
   const normalizedOptions = normalizeOptions(host, options);
   addProjectConfiguration(host, normalizedOptions.projectName, {
     root: normalizedOptions.projectRoot,
@@ -63,7 +63,7 @@ export default async function (host: Tree, options: StackGeneratorSchema) {
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
       build: {
-        executor: '@nxpm/stack:build',
+        executor: '@nxpm/api:build',
       },
     },
     tags: normalizedOptions.parsedTags,
